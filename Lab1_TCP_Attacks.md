@@ -155,6 +155,7 @@ A TCP RST attack involves sending a forged RST packet to terminate an active TCP
     ![Bonus Q2](images/Bonus_Q2_1.png)
     ![Bonus Q2](images/Bonus_Q2_2.png)
     ![Bonus Q2](images/Bonus_Q2_3.png)
+    
     [Clearer image of Bonus Q2](images/Bonus%20Q2.pdf) 
 ---
 
@@ -217,6 +218,7 @@ TCP Session Hijacking involves injecting malicious content into an existing TCP 
     ![Bonus Q3](images/Bonus_Q3_1.png)
     ![Bonus Q3](images/Bonus_Q3_2.png)
     ![Bonus Q3](images/Bonus_Q3_3.png)
+
     [Clearer image of Bonus Q2](images/Bonus_Q3.pdf)
 ---
 
