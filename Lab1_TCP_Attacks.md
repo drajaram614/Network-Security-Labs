@@ -280,13 +280,14 @@ In the TCP Attack Lab, I gained hands-on experience with various network-based a
 ### SYN Flooding Attack: 
 I learned how a Denial of Service (DoS) attack works by overwhelming a server’s SYN queue with half-open connections, preventing legitimate users from connecting. I also explored methods to mitigate this using SYN cookies and observed the effects of the attack both with and without this countermeasure.
 
-## TCP RST Attack: 
+### TCP RST Attack: 
 I learned how to use Scapy to craft and send forged RST packets to terminate an active TCP connection, such as a Telnet session, by analyzing sequence and acknowledgment numbers from Wireshark captures.
 
-## TCP Session Hijacking: 
+### TCP Session Hijacking: 
 This task taught me how attackers can inject malicious content into an existing TCP session. By capturing SEQ and ACK numbers with Wireshark, I could manipulate ongoing Telnet communications using Scapy, injecting custom commands to simulate session hijacking.
 
-## Creating a Reverse Shell: 
+### Creating a Reverse Shell: 
 Finally, I learned how to create a reverse shell by hijacking an active TCP session, injecting a reverse shell command to gain remote access to the victim’s system. This task demonstrated how attackers can leverage existing connections to execute arbitrary commands on a compromised machine.
+
 
 Overall, I developed a deeper understanding of how TCP vulnerabilities can be exploited and how attackers craft packets to disrupt or take over network connections, as well as some basic countermeasures to defend against these attacks.
