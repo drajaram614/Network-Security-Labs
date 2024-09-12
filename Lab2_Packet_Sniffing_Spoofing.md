@@ -462,3 +462,136 @@ There might be network security measures or configurations preventing packets fr
 The IP 10.9.0.99 could be configured to drop or ignore certain types of packets or responses.
 
 Ensure that the network configuration does not block or filter packets for specific IP addresses.
+
+
+## Q4.2 Task 1.4 - Ping 1.2.3.4
+
+1. **Ping the IP address 1.2.3.4** from the terminal and observe the output.
+
+2. **Run your sniffing and spoofing program** and verify that it correctly handles the ICMP packets.
+
+**Ping 1.2.3.4. Screenshot:**
+
+- **Program Output**: Show the output of your program.
+
+- **Terminal Ping**: Show the result of the `ping` command for `1.2.3.4`.
+
+- `Q4.2 Task 1.4 - Ping 1.2.3.4`
+
+![Q4.2 Task 1.4 - Ping 1.2.3.4](images/Q4.2%20Task%201.4%20-%20Ping%201.2.3.4.png)
+
+## Q4.3 Task 1.4 - Ping 10.9.0.99
+
+1. **Ping the IP address 10.9.0.99** from the terminal and observe the output.
+
+2. **Run your sniffing and spoofing program** and verify if it handles the ICMP packets.
+
+**Screenshot:**
+
+- **Program Output**: Show the output of your program.
+
+- **Terminal Ping**: Show the result of the `ping` command for `10.9.0.99`.
+
+- `Q4.3 Task 1.4 - Ping 10.9.0.99`
+
+![Q4.3 Task 1.4 - Ping 10.9.0.99.png](images/Q4.3%20Task%201.4%20-%20Ping%2010.9.0.99.png)
+
+
+### Explanation
+
+**Why It Does Not Work:**
+
+The failure to communicate with IP address `10.9.0.99` is likely due to network issues related to the ARP (Address Resolution Protocol). Here’s an explanation:
+
+- **ARP Protocol**: ARP is used to map IP addresses to MAC addresses within a local subnet. When a device needs to communicate with another device on the same network, it uses ARP to find the MAC address associated with the IP address.
+
+- **Unreachable Host**: If the ARP table does not contain an entry for `10.9.0.99`, or if there is no device with that IP on the subnet, the gateway or local router will return a "Destination Host Unreachable" message. This indicates that the network layer cannot find a route to the IP address because it is either not reachable or does not exist on the network.
+
+- **Impact on Sniffing and Spoofing**: Since `10.9.0.99` is not a valid or reachable host, the sniffing and spoofing program cannot intercept ICMP echo requests or send spoofed responses. The ARP failure prevents the packets from being delivered correctly to the destination, thereby rendering the sniffing and spoofing operations ineffective.
+
+**Summary**: The issue arises because `10.9.0.99` is a non-existent or unreachable IP address on the local subnet. The ARP protocol's inability to map this address to a MAC address results in the network reporting the destination as unreachable, which prevents the sniffing and spoofing program from functioning as intended.
+
+Make sure to include the required screenshots and explanations in your submission to complete the task.
+
+## Q4.4 Task 1.4 - Ping 8.8.8.8
+
+1. **Ping the IP address 8.8.8.8** from the terminal and observe the output.
+
+2. **Run your sniffing and spoofing program** and verify that it correctly handles the ICMP packets.
+
+**Expected Output for 8.8.8.8**:
+- The output should show the successful ping results to `8.8.8.8`.
+
+**Screenshot:**
+
+- **Program Output**: Show the output of your program.
+
+- **Terminal Ping**: Show the result of the `ping` command for `8.8.8.8`.
+
+- `Q4.4 Task 1.4 - Ping 8.8.8.8`
+![Q4.4 Task 1.4 - Ping 8.8.8.8.png](images/Q4.4%20Task%201.4%20-%20Ping%208.8.8.8.png)
+
+**Submission File**
+
+## Q5 Extra Credit - Ping 10.9.0.99 (+5%)
+
+**Objective**: Write a program that allows you to successfully ping `10.9.0.99` by performing ARP cache poisoning (ARP spoofing).
+
+### Instructions:
+
+1. **Perform ARP Cache Poisoning**: Use ARP spoofing to trick the network into thinking that your machine is the destination for `10.9.0.99`. This involves sending fake ARP responses to associate `10.9.0.99` with your machine's MAC address.
+
+2. **Configure Scapy's Sniff Function**: Ensure that you set the appropriate filter argument in Scapy’s `sniff` function to capture the relevant packets.
+
+3. **Ping 10.9.0.99**: After setting up ARP spoofing, ping `10.9.0.99` from the terminal and check if you receive a response.
+
+**Requirements**:
+
+- **Screenshot**:
+
+  - **Program Output**: Show the output of your ARP spoofing and pinging program.
+
+  - **Terminal Ping**: Show the result of the `ping` command for `10.9.0.99`.
+
+  - **Wireshark**: Provide a screenshot of Wireshark showing the ARP spoofing and the replies to the ping request.
+
+- **Extra Credit Program Code**: `Q5 Extra Credit - CODE`
+![Q5 Extra Credit-CODE.png](images/Q5%20Extra%20Credit%20-%20CODE.png)
+
+- **Extra Credit Ping**: `Q5 Extra Credit - Ping 10.9.0.99`
+![Q5 Extra Credit - Ping 10.9.0.99.png](images/Q5%20Extra%20Credit%20-%20Ping%2010.9.0.99.png)
+
+## What I Learned:
+
+In this lab, I gained hands-on experience with Scapy for network traffic analysis and manipulation. I learned to capture and filter ICMP and TCP packets, spoof ICMP packets, and implement a custom ICMP traceroute program. Combining packet sniffing and spoofing techniques enhanced my understanding of network traffic dynamics and practical cybersecurity skills.:
+
+### Q1.1: Sniffing Packets
+
+I learned to use Scapy to capture and display network packets, focusing on ICMP packets. I wrote a script to monitor network traffic, applied filters to isolate specific packet types, and used the show() function to detail packet contents.
+
+### Q1.2: Capture Only ICMP Packets
+
+I practiced filtering network traffic to capture only ICMP packets by specifying the appropriate filter (icmp). This skill is essential for isolating specific network traffic types during analysis.
+
+### Q1.4: Capture TCP Packets for Port 23
+
+I gained experience in capturing TCP packets directed at a specific port (23, used by Telnet) and from a particular host. This task taught me how to use filters to capture targeted network traffic, which is useful for monitoring and analyzing specific communications.
+
+### Q1.6: Capture Packets from a Particular Subnet
+
+I learned how to capture packets within a specific subnet (10.9.0.0/24). I used subnet filters to focus on traffic within a defined network range, enhancing my ability to analyze subnet-specific traffic.
+
+### Q2: Spoofing ICMP Packets
+
+I practiced spoofing ICMP echo request packets using Scapy, setting a custom source IP address and sending the packet to a destination IP. This exercise demonstrated how to manipulate packet headers to create spoofed network traffic and verify responses with tools like Wireshark.
+
+### Q3: Fully-Automated Traceroute
+
+I implemented a custom ICMP traceroute program, learning to handle TTL (Time-to-Live) values to trace the route to a destination. This involved creating a script to increment TTL values and identify the path packets take through the network.
+
+### Q4: Sniffing and Then Spoofing
+
+I combined packet sniffing and spoofing in a single program. I captured ICMP packets and sent spoofed responses based on the captured data. This task taught me to handle scenarios where specific IP addresses might not be reachable and understand potential network configuration issues that could impact packet transmission.
+
+Overall, this lab provided practical experience in network traffic analysis and manipulation, enhancing my understanding of packet sniffing and spoofing techniques in cybersecurity.
+
