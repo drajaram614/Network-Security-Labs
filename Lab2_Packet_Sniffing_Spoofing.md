@@ -565,31 +565,31 @@ Make sure to include the required screenshots and explanations in your submissio
 
 In this lab, I gained hands-on experience with Scapy for network traffic analysis and manipulation. I learned to capture and filter ICMP and TCP packets, spoof ICMP packets, and implement a custom ICMP traceroute program. Combining packet sniffing and spoofing techniques enhanced my understanding of network traffic dynamics and practical cybersecurity skills.:
 
-### Q1.1: Sniffing Packets
+### Sniffing Packets
 
 I learned to use Scapy to capture and display network packets, focusing on ICMP packets. I wrote a script to monitor network traffic, applied filters to isolate specific packet types, and used the show() function to detail packet contents.
 
-### Q1.2: Capture Only ICMP Packets
+### Capture Only ICMP Packets
 
 I practiced filtering network traffic to capture only ICMP packets by specifying the appropriate filter (icmp). This skill is essential for isolating specific network traffic types during analysis.
 
-### Q1.4: Capture TCP Packets for Port 23
+### Capture TCP Packets for Port 23
 
 I gained experience in capturing TCP packets directed at a specific port (23, used by Telnet) and from a particular host. This task taught me how to use filters to capture targeted network traffic, which is useful for monitoring and analyzing specific communications.
 
-### Q1.6: Capture Packets from a Particular Subnet
+### Capture Packets from a Particular Subnet
 
 I learned how to capture packets within a specific subnet (10.9.0.0/24). I used subnet filters to focus on traffic within a defined network range, enhancing my ability to analyze subnet-specific traffic.
 
-### Q2: Spoofing ICMP Packets
+### Spoofing ICMP Packets
 
 I practiced spoofing ICMP echo request packets using Scapy, setting a custom source IP address and sending the packet to a destination IP. This exercise demonstrated how to manipulate packet headers to create spoofed network traffic and verify responses with tools like Wireshark.
 
-### Q3: Fully-Automated Traceroute
+### Fully-Automated Traceroute
 
 I implemented a custom ICMP traceroute program, learning to handle TTL (Time-to-Live) values to trace the route to a destination. This involved creating a script to increment TTL values and identify the path packets take through the network.
 
-### Q4: Sniffing and Then Spoofing
+### Sniffing and Then Spoofing
 
 I combined packet sniffing and spoofing in a single program. I captured ICMP packets and sent spoofed responses based on the captured data. This task taught me to handle scenarios where specific IP addresses might not be reachable and understand potential network configuration issues that could impact packet transmission.
 
