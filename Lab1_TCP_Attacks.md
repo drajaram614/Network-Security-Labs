@@ -155,6 +155,7 @@ A TCP RST attack involves sending a forged RST packet to terminate an active TCP
     ![Bonus Q2](images/Bonus_Q2_1.png)
     ![Bonus Q2](images/Bonus_Q2_2.png)
     ![Bonus Q2](images/Bonus_Q2_3.png)
+    [Clearer image of Bonus Q2](images/Bonus%20Q2.pdf) 
 ---
 
 ## Q3 Task 3: TCP Session Hijacking
@@ -216,6 +217,7 @@ TCP Session Hijacking involves injecting malicious content into an existing TCP 
     ![Bonus Q3](images/Bonus_Q3_1.png)
     ![Bonus Q3](images/Bonus_Q3_2.png)
     ![Bonus Q3](images/Bonus_Q3_3.png)
+    [Clearer image of Bonus Q2](images/Bonus_Q3.pdf)
 ---
 
 ## Q4 Task 4: Creating Reverse Shell using TCP Session Hijacking
@@ -263,3 +265,15 @@ A reverse shell allows attackers to run commands on a compromised machine by inj
     Verify that the attacker machine receives a shell connection.
 
     **Expected Output:** The attacker machine should show a connected shell.
+
+### Submission
+
+- **Python Code:**
+    - Screenshot: `Q4 Python_Scapy code`
+    ![Q4 Python_Scapy code](images/Q3%20Python_Scapy%20code.png)
+
+- **Attack Screenshots:**
+    - Revese Shell output: 
+    `Q4_reverse_shell` 
+    
+    ![Q4_reverse_shell](images/Q4_reverse_shell.png)
