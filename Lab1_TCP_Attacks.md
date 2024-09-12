@@ -255,10 +255,6 @@ A reverse shell allows attackers to run commands on a compromised machine by inj
 
     - **Run the Attack:**
 
-        ```python
-        # Replace placeholders with actual values
-        ```
-
 5. **Observe and Capture**
 
     **Reverse Shell Connection:**
