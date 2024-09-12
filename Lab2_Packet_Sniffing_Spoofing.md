@@ -82,10 +82,11 @@ To generate ICMP traffic:
 
 Take a screenshot showing the ICMP packets being captured in the terminal along with the date and time visible in your virtual machine.
 
-#### ICMP packet captures
-Date and time in the taskbar or system clock
+### Submission
 
-The full VM interface for proof of environment
+- **ICMP packet captures:**
+    - Screenshot: ` Task 1.1B ICMP`
+    ![ Task 1.1B ICMP.png](images/Task%201.1B%20ICMP.png)
 
 ## Q1.4: Task 1.1B(b): Capture TCP Packets for Port 23
 
@@ -96,8 +97,22 @@ For this task, you will capture TCP packets that come from a specific IP address
 def print_pkt(pkt):
     pkt.show()
 
-pkt = sniff(filter='tcp and host 10.9.0.1 and port 23', prn=print_pkt)
+pkt = sniff(filter= 'BLANK' , prn=print_pkt)
 ```
+### Options:
+
+`tcp port 23`
+
+`host 10.9.0.3 and port 23`
+
+`tcp and host 10.9.0.1 and port 23`
+
+`icmp and host 10.9.0.2 and port 23`
+
+### Answer:
+
+`tcp and host 10.9.0.1 and port 23`
+
 ### Explanation:
 `filter='tcp and host 10.9.0.1 and port 23'`: The filter captures only TCP packets coming from the host 10.9.0.1 and destined for port 23.
 
@@ -121,3 +136,97 @@ The correct filter option is:
 `tcp and host 10.9.0.1 and port 23`
 
 This will ensure that only TCP traffic destined for port 23 from the specific host is captured.
+
+## Q1.5 Task 1.1B(b): Capture Specific TCP/Port 23 (Screenshot)
+
+### Instructions:
+Take a screenshot demonstrating that TCP packets destined for port 23 were captured. Ensure the screenshot includes the entire VM along with the date and time.
+
+### Submission
+
+  - Display TCP packet captures for port 23
+
+  - Include date and time in the VM interface
+
+- **TCP packet captures:**
+    - Screenshot: `Q5 Task 1.1B Capture specific TCP/port 23`
+    ![Q1.5 Task 1.1B TCP.png](images/Q1.5%20Task%201.1B%20TCP.png)
+
+## Q1.6 Task 1.1B(c): Particular Subnet
+
+### Instructions:
+Capture packets coming from or going to the subnet `10.9.0.0/24`. Fill in the blank in the code provided, and then take a screenshot demonstrating the traffic generated.
+
+### Code:
+
+```python
+def print_pkt(pkt):
+    pkt.show()
+
+pkt = sniff(filter= 'BLANK' , prn=print_pkt)
+```
+#### Options:
+
+
+`net 10.9.0.0/24`
+
+`net 10.9.0.0`
+
+`net 10.9.0.0/26`
+
+`net 128.238.0.0/24`
+
+#### Answer:
+The correct filter option to capture traffic is:
+
+`net 10.9.0.0/24`
+
+## Q1.7 Task 1.1B(c): Particular Subnet(Screenshot)
+
+### Submission
+
+Show packets from the 10.9.0.0/24 subnet
+
+Include date and time in the VM interface
+
+- **Subnet 10.9.0.0/24 packet capture:**
+    - Screenshot: `Q1.7_Task_1.1B_TCP`
+    ![Q1.7_Task_1.1B_TCP.png](images/Q1.7%20Task%201.1B%20TCP.png)
+
+## Q2 Task 1.2: Spoofing ICMP Packets
+
+### Instructions:
+
+You will spoof an ICMP echo request packet with a source IP address of 8.8.8.8 from the first VM and send it to the second VM. Use Wireshark on the second VM to show that it replies back with ICMP echo replies.
+
+#### Code:
+```python
+from scapy.all import *
+
+# Create an IP packet
+a = IP()  # ➀
+a.dst = '10.0.2.3'  # ➁
+
+# Create an ICMP packet
+b = ICMP()  # ➂
+
+# Combine IP and ICMP packets
+p = a/b  # ➃
+
+# Send the packet
+send(p)  # ➄
+```
+#### Explanation:
+
+`a = IP()`: Initializes an IP packet.
+`a.dst = '10.0.2.3'`: Sets the destination IP address.
+`b = ICMP()`: Initializes an ICMP packet.
+`p = a/b`: Combines the IP and ICMP packets.
+`send(p)`: Sends the packet to the destination.
+
+#### Verification:
+
+Use Wireshark on the second VM to capture network traffic and verify that the echo replies are received in response to your spoofed ICMP packet.
+Ensure you capture the entire communication to show the request and reply.
+
+
