@@ -1,5 +1,7 @@
 # Packet Sniffing and Spoofing Lab
 
+## Summary
+
 This guide will walk you through performing tasks related to packet sniffing and spoofing using Python and Scapy. You will capture specific network traffic, including ICMP and TCP packets, using filters to isolate certain types of communication.
 
 ## Prerequisites
@@ -49,6 +51,7 @@ su seed
 $ ./sniffer.py
 ```
 ## Q1.2: Task 1.1B(a): Capture Only ICMP Packets
+
 In this task, you will capture only ICMP packets using a filter in Scapy.
 
 ### Question:
@@ -229,4 +232,233 @@ send(p)  # ➄
 Use Wireshark on the second VM to capture network traffic and verify that the echo replies are received in response to your spoofed ICMP packet.
 Ensure you capture the entire communication to show the request and reply.
 
+## Q2.1 Task 1.2 - Scapy Code
 
+### Instructions:
+Complete the Scapy code to spoof an ICMP packet. Use the provided IP addresses to fill in the blanks and execute the code.
+
+### Code:
+
+```python
+from scapy.all import *
+
+# Define IP layer with source and destination addresses
+ip = IP(src='BLANK(1)', dst='BLANK(2)')  # BLANK(1) and BLANK(2)
+icmp = ICMP()  # Define ICMP layer
+
+# Combine IP and ICMP layers to create the packet
+packet = ip/icmp
+
+# Display the packet details
+packet.show()
+
+# Send the packet
+send(packet)
+```
+### Questions:
+a. Based on the code above, what is the IP address for (1)?
+
+`Answer: 8.8.8.8`
+
+b. Based on the code above, what is the IP address for (2)?
+
+`Answer: 10.9.0.5`
+
+## Q2.2 Task 1.2 - Wireshark Screenshot
+
+### Instructions:
+
+Take a screenshot in Wireshark showing the spoofed ICMP echo request from 8.8.8.8 and that the VM replied back with an echo reply.
+
+### Submission
+
+Show the ICMP echo request from 8.8.8.8
+
+Show the corresponding echo reply
+
+Include the entire VM interface with date and time
+
+- **Spoof Echo Request Wireshark capture:**
+    - Screenshot: `Q2.2_Task_1.2_Screenshot`
+    ![Q2.2_Task_1.2_Screenshot.png](images/Q2.2%20Task%201.2%20Wireshark.png)
+
+
+    ## Q3 Task 1.3: Fully-Automated Traceroute
+
+### Instructions:
+
+Using the provided skeleton code, implement an ICMP traceroute using Scapy. Do not use the built-in Scapy traceroute function. Perform a traceroute to `8.8.8.8`. Capture the results using Wireshark and take a screenshot of your program’s output.
+
+### Q3.1 Task 1.3 - Scapy Code
+
+Fill in the blanks in the following code to implement the ICMP traceroute.
+
+```python
+from scapy.all import *
+
+ttl = 'BLANK(1)'
+while True:
+    a = IP(dst='BLANK(2)', ttl=ttl)  
+    b = ICMP()
+    p = a/b
+    pkt = sr1(p, verbose=0)
+    if 'BLANK(3)' == 0:
+        print("Complete", pkt[IP].src)
+        break
+    else:
+        print("TTL: %d, Source: %s" % (ttl, pkt[IP].src))
+    ttl += 1
+```
+### Answers:
+a. Fill in the blank for 1.
+
+`Answer: 1`
+
+b. Fill in the blank for 2.
+
+`Answer: 8.8.8.8`
+
+c. Fill in the blank for 3.
+
+`Answer: pkt[IP].type`
+
+### Explanation:
+
+`ttl = 1`: Initializes the Time-to-Live (TTL) value for the ICMP packets.
+
+`a = IP(dst='8.8.8.8', ttl=ttl)`: Creates an IP packet with the destination address 8.8.8.8 and the current TTL value.
+
+`if pkt[IP].type == 0`: Checks if the packet type is 0, which indicates that the destination has been reached (ICMP Echo Reply).
+
+## Q3.2 Task 1.3 - Write Your Own Traceroute Program
+
+### Instructions:
+
+For this task, you will write your own traceroute program using the skeleton code provided. Ensure that your traceroute program handles cases where routers may not respond, and fully automate the traceroute process.
+
+### Implementation:
+Use the following skeleton code to create your traceroute program. Be sure to handle scenarios where routers might not respond (e.g., timeouts).
+
+```python
+from scapy.all import *
+
+def traceroute(dst_ip):
+    ttl = 1
+    while True:
+        # Create IP packet with increasing TTL
+        packet = IP(dst=dst_ip, ttl=ttl) / ICMP()
+        response = sr1(packet, timeout=2, verbose=0)  # Set a timeout for the response
+        
+        if response is None:
+            print("TTL: %d, No Response" % ttl)
+        elif response[IP].type == 0:
+            print("Complete", response[IP].src)
+            break
+        else:
+            print("TTL: %d, Source: %s" % (ttl, response[IP].src))
+        
+        ttl += 1
+```
+# Test the traceroute function
+`traceroute("8.8.8.8")`
+
+### Write Your Traceroute Program:
+
+Implement the traceroute program using the provided skeleton code.
+Ensure that the program handles cases where a router does not respond within the timeout period.
+### Testing:
+
+Run your traceroute program to trace the route to 8.8.8.8.
+Verify that your program handles non-responsive routers and completes the trace.
+
+### Documentation:
+
+#### Traceroute Program: 
+Submit your Python traceroute program file.
+#### Wireshark Screenshot: 
+Capture a screenshot showing the Wireshark output of the traceroute to 8.8.8.8.
+
+#### Program Output: 
+Include a screenshot of the output from your traceroute program.
+
+#### Ubuntu Built-in Traceroute: 
+Take a screenshot of the output from the built-in Ubuntu traceroute command (traceroute -I 8.8.8.8).
+
+#### VM Screenshot: 
+Include a screenshot showing the entire VM interface with date and time visible.
+
+- **Trace route program:**
+    - Screenshot: `Q3.2 Task 1.3 traceroute`
+    ![Q3.2 Task 1.3 traceroute.png](images/Q3.2%20Task%201.3%20traceroute.png)
+
+## Q4 Task 1.4: Sniffing and Then Spoofing
+
+In this task, you will perform both sniffing and spoofing on the same LAN. You need to run the programs on two machines: the VM and the user container. 
+
+### Objective:
+- Implement a program that sniffs for ICMP packets and then sends a spoofed response.
+- Explain why the program does not work for the IP address `10.9.0.99`, even though it works for other IPs such as `1.2.3.4` and `8.8.8.8`.
+
+### Q4.1 Task 1.4 - Sniffing and Then Spoofing Program
+
+You will use the following skeleton code to create a program that both sniffs and spoofs ICMP packets.
+
+```python
+from scapy.all import *
+
+def sniff_and_spoof(packet):
+    if ICMP in packet:
+        ip = IP('BLANK(1)', dst='BLANK(2)')
+        icmp = ICMP(type='BLANK(3)', id='BLANK(4)', seq='BLANK(5)')
+        raw_data = 'BLANK(6)'
+        new_packet = 'BLANK(7)'
+        send(new_packet, verbose=0)
+
+# Sniffing for ICMP packets from a specific source IP address
+pkt = sniff(filter='BLANK(8)', prn=sniff_and_spoof)
+```
+
+### Fill in the Blanks:
+#### Fill in the blank for 1:
+
+`packet[IP].dst`
+
+#### Fill in the blank for 2:
+
+`packet[IP].src`
+
+#### Fill in the blank for 3:
+
+`0`
+
+##### Fill in the blank for 4:
+
+`packet[ICMP].id`
+
+##### Fill in the blank for 5:
+
+`packet[ICMP].seq`
+
+##### Fill in the blank for 6:
+
+`packet[Raw].load`
+
+##### Fill in the blank for 7:
+
+`ip/icmp/raw_data`
+
+##### Fill in the blank for 8:
+
+
+`icmp and src host 10.9.0.6`
+
+### Explanation:
+Why the Program Does Not Work for IP 10.9.0.99: The program might not work for IP 10.9.0.99 due to several possible reasons:
+
+The IP address 10.9.0.99 might not be active or reachable on the network.
+
+There might be network security measures or configurations preventing packets from or to 10.9.0.99.
+
+The IP 10.9.0.99 could be configured to drop or ignore certain types of packets or responses.
+
+Ensure that the network configuration does not block or filter packets for specific IP addresses.
