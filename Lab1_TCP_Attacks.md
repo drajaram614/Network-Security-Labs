@@ -94,12 +94,12 @@ A SYN Flood attack is a Denial of Service (DoS) attack where attackers send nume
 ### Submission
 
 - **Without SYN Cookies:**
-    - Screenshot: `TCP Attack without the SYN cookie mechanism.png`
+    - Screenshot: `TCP Attack without the SYN cookie mechanism`
     ![TCP Attack with the SYN cookie mechanism](images/TCP%20Attack%20without%20the%20SYN%20cookie%20mechanism.png)
 
 - **With SYN Cookies:**
-    - Screenshot: `TCP Attack with the SYN cookie mechanism.png`
-![TCP Attack with the SYN cookie mechanism](images/TCP%20Attack%20with%20the%20SYN%20cookie%20mechanism.png)
+    - Screenshot: `TCP Attack with the SYN cookie mechanism`
+    ![TCP Attack with the SYN cookie mechanism](images/TCP%20Attack%20with%20the%20SYN%20cookie%20mechanism.png)
 ---
 
 ## Q2 Task 2: TCP RST Attacks on Telnet Connections
@@ -129,7 +129,6 @@ A TCP RST attack involves sending a forged RST packet to terminate an active TCP
 3. **Execute Attack**
 
     - **Run the Attack:**
-        ![Q2 Python Scapy code](images/Q2%20Python_Scapy%20code.png)
 
 4. **Observe and Capture**
 
@@ -143,14 +142,19 @@ A TCP RST attack involves sending a forged RST packet to terminate an active TCP
 ### Submission
 
 - **Python Code:**
-    - Screenshot: `Q2 Python_Scapy code.png`
+    - Screenshot: `Q2 Python_Scapy code`
+            ![Q2 Python Scapy code](images/Q2%20Python_Scapy%20code.png)
 
 - **Attack Screenshots:**
-    - Wireshark output: `Q2 TCP RST ATTACK Wireshark 1.png` and `Q2 TCP RST ATTACK Wireshark 2.png`
+    - Wireshark output: `Q2 TCP RST ATTACK Wireshark 1` and `Q2 TCP RST ATTACK Wireshark 2`
+    ![Q2 TCP RST ATTACK Wireshark 1](images/Q2%20TCP%20RST%20ATTACK%20Wireshark%201.png)
+    ![Q2 TCP RST ATTACK Wireshark 2](images/Q2%20TCP%20RST%20ATTACK%20Wireshark%202.png)
 
 - **Bonus PDF (Optional):**
     - Document automation process and verification.
-
+    ![Bonus Q2](images/Bonus_Q2_1.png)
+    ![Bonus Q2](images/Bonus_Q2_2.png)
+    ![Bonus Q2](images/Bonus_Q2_3.png)
 ---
 
 ## Q3 Task 3: TCP Session Hijacking
@@ -182,10 +186,6 @@ TCP Session Hijacking involves injecting malicious content into an existing TCP 
 
     - **Run the Attack:**
 
-        ```python
-        # Replace placeholders with actual values
-        ```
-
 4. **Observe and Capture**
 
     **Wireshark Frames:**
@@ -198,14 +198,24 @@ TCP Session Hijacking involves injecting malicious content into an existing TCP 
 ### Submission
 
 - **Python Code:**
-    - Screenshot: `Q3 Python_Scapy code.png`
+    - Screenshot: `Q3 Python_Scapy code`
+    ![Q3 Python_Scapy code](images/Q3%20Python_Scapy%20code.png)
 
 - **Attack Screenshots:**
-    - Wireshark output: `Q3 TCP Session Hijacking Attack before.png` and `Q3 TCP Session Hijacking Attack after.png`
+    - Wireshark output: 
+    `Q3 TCP Session Hijacking Attack before` 
+    
+    ![Q3 TCP Session Hijacking Attack before](images/Q3%20TCP%20Session%20Hijacking%20Attack%20before.png)
+    
+    `Q3 TCP Session Hijacking Attack after`
+
+    ![Q3 TCP Session Hijacking Attack after](images/Q3%20TCP%20Session%20Hijacking%20Attack%20after.png)
 
 - **Bonus PDF (Optional):**
     - Document automation process and verification.
-
+    ![Bonus Q3](images/Bonus_Q3_1.png)
+    ![Bonus Q3](images/Bonus_Q3_2.png)
+    ![Bonus Q3](images/Bonus_Q3_3.png)
 ---
 
 ## Q4 Task 4: Creating Reverse Shell using TCP Session Hijacking
