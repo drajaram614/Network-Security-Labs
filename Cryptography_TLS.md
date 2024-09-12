@@ -28,13 +28,17 @@ I learned about various cryptographic attacks including Cipher-text Only, Chosen
 **Definition:** Block cipher modes of operation are techniques used to securely encrypt data with block ciphers. They ensure that identical plaintext blocks produce different ciphertext blocks to improve security.
 
 **True Statements:**
+
 - **Choice 1:** To ensure blocks of the same plaintext will give different ciphertext.
+
 - **Choice 2:** The Initialization Vector (IV) does not have to be kept a secret.
 
 ## Q3. Caesar Cipher Encryption
+
 **Task:** Encrypt the text “MALWARE” using Caesar’s Cipher with a key of +3.
 
 **Solution:** Caesar Cipher shifts each letter in the plaintext by 3 positions in the alphabet.
+```
 - M → P
 - A → D
 - L → O
@@ -42,17 +46,21 @@ I learned about various cryptographic attacks including Cipher-text Only, Chosen
 - A → D
 - R → U
 - E → H
-
-**Encrypted text:** PDOZDUH
+```
+**Encrypted text:** `PDOZDUH`
 
 ## Q4. Mono-Alphabetic Cipher Decryption
-**Cipher Table:**
-- **Plaintext:** abcdefghijklmnopqrstuvwxyz
-- **Ciphertext:** mnbvcxzasfdghjklpoiuytrewq
 
-**Task:** Decrypt “icbyosuw” using the provided mono-alphabetic cipher.
+**Cipher Table:**
+
+- **Plaintext:** `abcdefghijklmnopqrstuvwxyz`
+
+- **Ciphertext:** `mnbvcxzasfdghjklpoiuytrewq`
+
+**Task:** Decrypt `“icbyosuw”` using the provided mono-alphabetic cipher.
 
 **Solution:**
+```
 - i → s
 - c → e
 - b → c
@@ -61,74 +69,77 @@ I learned about various cryptographic attacks including Cipher-text Only, Chosen
 - s → i
 - u → t
 - w → y
-
-**Decrypted text:** security
+```
+**Decrypted text:** `security`
 
 ## Q5. Vigenère Cipher Encryption
-**Task:** Encrypt “PENTEST” using the Vigenère Cipher with the key “NETSEC”.
+**Task:** Encrypt `“PENTEST”` using the Vigenère Cipher with the key `“NETSEC”`.
 
 **Solution:**
+
 1. Write the key repeatedly to match the length of the plaintext.
+
 2. Use the Vigenère table or shift each letter in the plaintext by the corresponding letter in the key.
 
 **Encrypted text:** CIGLIUG
 
 ## Q6. Vigenère Cipher Decryption
-**Task:** Decrypt “IMKMW” using the key “NETSEC”.
+**Task:** Decrypt `“IMKMW”` using the key `“NETSEC”`.
 
 **Solution:**
 1. Use the Vigenère table or reverse the shifts applied during encryption.
 
-**Decrypted text:** VIRUS
+**Decrypted text:** `VIRUS`
 
 ## Q7. RSA Modulo Calculation
-**Task:** Compute \(47^{11} \mod 13\).
+**Task:** Compute `\(47^{11} \mod 13\)`.
 
 **Solution:** Use modular exponentiation tools or software.
 
-**Result:** 5
+**Result:** `5`
 
 ## Q8. Ciphertext without CBC
-**Task:** Without using Cipher Block Chaining (CBC), find the ciphertext for “111100011100” using the given table.
+**Task:** Without using Cipher Block Chaining (CBC), find the ciphertext for `“111100011100”` using the given table.
 
 **Solution:** Apply the given input-output mapping directly.
 
-**Ciphertext:** 010001111011
+**Ciphertext:** `010001111011`
 
 ## Q9. CBC Encryption
-**Task:** Encrypt “111100011100” using CBC mode with IV=101.
+**Task:** Encrypt `“111100011100”` using CBC mode with `IV=101`.
 
 **Solution:**
 1. Apply the XOR operation between the IV and the first block of plaintext.
+
 2. Encrypt this result, then XOR the result with the next plaintext block, and so on.
 
 **Ciphertext:** 101111011010
 
 ## Q10. RSA Key Generation
-**Given primes:** \( p=7 \), \( q=11 \)
+**Given primes:** `\( p=7 \), \( q=11 \)`
 
 **10.1 Compute n:**
-\[ n = p \times q = 7 \times 11 = 77 \]
+`\[ n = p \times q = 7 \times 11 = 77 \]`
 
 **10.2 Compute φ(n):**
-\[ \phi(n) = (p-1) \times (q-1) = (7-1) \times (11-1) = 60 \]
+`\[ \phi(n) = (p-1) \times (q-1) = (7-1) \times (11-1) = 60 \]`
 
-**10.3 First five smallest possible values of e (coprime with φ(n)):**
-\[ e = 7, 11, 13, 17, 19 \]
+**10.3 First five smallest possible values of `e (coprime with φ(n))`:**
+`\[ e = 7, 11, 13, 17, 19 \]`
 
-**10.4 Private exponent d (using e=7 and φ(n)=60):** Find \( d \) such that \( e \times d \mod \phi(n) = 1 \). The value is **43**.
+**10.4 Private exponent d (using e=7 and φ(n)=60):** `Find \( d \) such that \( e \times d \mod \phi(n) = 1 \).` The value is **43**.
 
 **10.5 Encrypt m=10:**
-\[ c = m^e \mod n = 10^7 \mod 77 = 10 \]
+`\[ c = m^e \mod n = 10^7 \mod 77 = 10 \]`
 
 ## Q11. Diffie-Hellman Key Exchange
-**Given:** \( g=5 \), \( n=18 \), Alice’s secret \( a=5 \), Bob’s secret \( b=8 \)
+**Given:** `\( g=5 \), \( n=18 \), Alice’s secret \( a=5 \), Bob’s secret \( b=8 \)`
 
 **11.1 Alice’s public key A:**
-\[ A = g^a \mod n = 5^5 \mod 18 = 11 \]
+`\[ A = g^a \mod n = 5^5 \mod 18 = 11 \]`
 
 **11.2 Bob’s public key B:**
-\[ B = g^b \mod n = 5^8 \mod 18 = 7 \]
+`\[ B = g^b \mod n = 5^8 \mod 18 = 7 \]`
 
 **11.3 Shared key K:**
-\[ K = B^a \mod n = 7^5 \mod 18 = 13 \]
+`\[ K = B^a \mod n = 7^5 \mod 18 = 13 \]`
