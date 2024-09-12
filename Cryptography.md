@@ -113,7 +113,7 @@ I learned about various cryptographic attacks including Cipher-text Only, Chosen
 
 2. Encrypt this result, then XOR the result with the next plaintext block, and so on.
 
-**Ciphertext:** 101111011010
+**Ciphertext:** `101111011010`
 
 ## Q10. RSA Key Generation
 **Given primes:** `\( p=7 \), \( q=11 \)`
