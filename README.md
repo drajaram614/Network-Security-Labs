@@ -1,17 +1,17 @@
 # Network Security Labs
 
-This repository contains a series of Network Security labs using Virtual Machines and Wireshark. These labs provide hands-on experience with various network security concepts, including TCP attacks, packet sniffing, spoofing, ARP cache poisoning, and firewall configurations. The labs also include a focus on cryptography, specifically TLS.
+This repository contains a series of Network Security labs that I created using Virtual Machines, Docker Containers and Wireshark. These labs provide me with hands-on experience with various network security concepts, including TCP attacks, packet sniffing, spoofing, ARP cache poisoning, and firewall configurations. I also focus on cryptography in these labs, specifically TLS.
 
 ## Lab Summaries
 
 - **[TCP Attacks Lab](https://github.com/drajaram614/Network-Security-Labs/blob/main/TCP%20Attacks%20Lab.md)**
-  - In this lab, you'll learn about TCP-based attacks such as SYN flooding and TCP session hijacking.
+  - In this lab, I learned about TCP-based attacks such as SYN flooding and TCP session hijacking.
 
 - **[Packet Sniffing and Spoofing Lab](https://github.com/drajaram614/Network-Security-Labs/blob/main/Packet%20Sniffing%20Spoofing%20Lab.md)**
   - This lab covers packet sniffing using tools like Wireshark and demonstrates how to spoof packets on a network.
 
 - **[Firewall (iptables) Lab](https://github.com/drajaram614/Network-Security-Labs/blob/main/Firewall%20(iptables)%20Lab.md)**
-  - Learn how to configure and use iptables to set up firewall rules for network security.
+  - I learned how to configure and use iptables to set up firewall rules for network security.
 
 ## Cryptography Lab
 
