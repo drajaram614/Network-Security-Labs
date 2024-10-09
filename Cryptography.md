@@ -89,7 +89,7 @@ I learned about various cryptographic attacks including Cipher-text Only, Chosen
 **Decrypted text:** `VIRUS`
 
 ## RSA Modulo Calculation
-**Task:** Compute `\(47^{11} \mod 13\)`.
+**Task:** Compute `(47^{11} mod 13)`.
 
 **Solution:** Use modular exponentiation tools or software.
 
