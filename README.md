@@ -10,5 +10,5 @@ This repository contains a series of Network Security labs. These labs provide h
 ## TLS Lab
 
 - **[TLS](TLS.md)**
-  - This lab focuses on Transport Layer Security (TLS), covering key protocols and their role in securing communications.
+    - In this TLS lab, I analyzed SSL/TLS traffic using Wireshark and inspect website security details through browser tools, focusing on TLS versions, cipher suites, and certificate information. I also explored key concepts like HMAC vs. digital signatures, Certificate Transparency, and Certificate Revocation Lists (CRLs).
 
