@@ -113,30 +113,30 @@ I learned about various cryptographic attacks including Cipher-text Only, Chosen
 **Ciphertext:** `101111011010`
 
 ## RSA Key Generation
-**Given primes:** `\( p=7 \), \( q=11 \)`
+**Given primes:** `( p=7 ), ( q=11 )`
 
 **Compute n:**
-`\[ n = p \times q = 7 \times 11 = 77 \]`
+`[ n = p times q = 7 times 11 = 77 ]`
 
 **Compute φ(n):**
-`\[ \phi(n) = (p-1) \times (q-1) = (7-1) \times (11-1) = 60 \]`
+`[ phi(n) = (p-1) times (q-1) = (7-1) times (11-1) = 60 ]`
 
 **First five smallest possible values of `e (coprime with φ(n))`:**
-`\[ e = 7, 11, 13, 17, 19 \]`
+`[ e = 7, 11, 13, 17, 19 ]`
 
-**10.4 Private exponent d (using e=7 and φ(n)=60):** `Find \( d \) such that \( e \times d \mod \phi(n) = 1 \).` The value is **43**.
+**10.4 Private exponent d (using e=7 and φ(n)=60):** `Find ( d ) such that ( e times d mod phi(n) = 1 ).` The value is **43**.
 
 **Encrypt m=10:**
-`\[ c = m^e \mod n = 10^7 \mod 77 = 10 \]`
+`[ c = m^e mod n = 10^7 mod 77 = 10 ]`
 
 ## Diffie-Hellman Key Exchange
-**Given:** `\( g=5 \), \( n=18 \), Alice’s secret \( a=5 \), Bob’s secret \( b=8 \)`
+**Given:** `( g=5 ), ( n=18 ), Alice’s secret ( a=5 ), Bob’s secret ( b=8 )`
 
 **Alice’s public key A:**
-`\[ A = g^a \mod n = 5^5 \mod 18 = 11 \]`
+`[ A = g^a mod n = 5^5 mod 18 = 11 ]`
 
 **Bob’s public key B:**
-`\[ B = g^b \mod n = 5^8 \mod 18 = 7 \]`
+`[ B = g^b mod n = 5^8 mod 18 = 7 ]`
 
 **Shared key K:**
-`\[ K = B^a \mod n = 7^5 \mod 18 = 13 \]`
+`[ K = B^a mod n = 7^5 mod 18 = 13 ]`
