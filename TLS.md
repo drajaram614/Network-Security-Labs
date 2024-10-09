@@ -48,10 +48,10 @@ In this TLS lab, I learned how to inspect and analyze SSL/TLS traffic using Wire
 
 **Why is the “Finished” message missing?**
    - **Answer:** The "Finished" message might be missing due to:
-     - A. The server/client has more messages to send.
-     - B. The finished message is encrypted.
-     - C. This is a TLS abbreviated handshake.
-     - D. There is no finished message in the TLS handshake.
+     - The server/client has more messages to send.
+     - The finished message is encrypted.
+     - This is a TLS abbreviated handshake.
+     - There is no finished message in the TLS handshake.
      - For most cases, it could be due to an abbreviated handshake or an encrypted message.
 
 ## SSL/TLS Inspection from Web Browser
@@ -121,32 +121,32 @@ In this TLS lab, I learned how to inspect and analyze SSL/TLS traffic using Wire
 
 **Difference between HMAC and a Digital Signature**
    - **Answer:**
-     - B. Digital Signature uses asymmetric keys whereas HMAC uses symmetric keys.
-     - C. Digital Signatures can be used without first sharing a secret key.
+     - Digital Signature uses asymmetric keys whereas HMAC uses symmetric keys.
+     - Digital Signatures can be used without first sharing a secret key.
 
 **Certificate Transparency**
    - **Answer:**
-     - A. It provides an open framework for monitoring and auditing SSL certificates.
-     - B. It aims to remedy certificate-based threats by making the issuance and existence of SSL certificates open to scrutiny by domain owners, CAs, and domain users.
-     - C. It aims to protect users from being fooled by certificates that were mistakenly or maliciously issued.
+     - It provides an open framework for monitoring and auditing SSL certificates.
+     - It aims to remedy certificate-based threats by making the issuance and existence of SSL certificates open to scrutiny by domain owners, CAs, and domain users.
+     - It aims to protect users from being fooled by certificates that were mistakenly or maliciously issued.
 
 **Field Determining What Websites Certificate Can Be Used For**
-   - **Answer:** D. Subject Alternative Name Extension
+   - **Answer:** Subject Alternative Name Extension
 
 **Field Specifying CA or End Entity**
-   - **Answer:** D. Basic Constraints: CA Extension
+   - **Answer:** Basic Constraints: CA Extension
 
 **Field Specifying CRL Location**
-   - **Answer:** C. CRL Distribution Points Extension
+   - **Answer:** CRL Distribution Points Extension
 
 **What is a Certificate Revocation List (CRL)?**
-   - **Answer:** A. A list of certificates that have been revoked by the issuing CA before their actual expiration date.
+   - **Answer:** A list of certificates that have been revoked by the issuing CA before their actual expiration date.
 
 **Issuer CN Same as Field in Intermediary CA’s Certificate**
-   - **Answer:** A. Subject Alternative Name Extension
+   - **Answer:** Subject Alternative Name Extension
 
 **Messages Hashed in the Finished Message**
-   - **Answer:** C. All prior handshake messages
+   - **Answer:** All prior handshake messages
 
 **True Statements about Subject Alternative Name (SAN)**
    - **Answer:** (Choose all that apply, based on specific statements provided in your course material.)
@@ -159,4 +159,4 @@ In this TLS lab, I learned how to inspect and analyze SSL/TLS traffic using Wire
      - (Choose correct statements about certificate pinning based on your additional research.)
 
 **Reason for Implementing HTTP Strict Transport Security (HSTS)**
-   - **Answer:** A. To prevent man-in-the-middle attacks and enforce secure connections.
+   - **Answer:** To prevent man-in-the-middle attacks and enforce secure connections.
